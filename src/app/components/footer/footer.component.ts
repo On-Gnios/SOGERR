@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   test: Date = new Date();
+  public EMPRESA_DESARROLLADORA_NOMBRE = environment.EMPRESA_DESARROLLADORA_NOMBRE;
 
   constructor() { }
 

@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <!-- Form -->
+      <!-- Form 
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
           <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
@@ -87,7 +87,35 @@
           </div>
         </div>
       </form>
-      <!-- Navigation -->
+-->
+      
+         
+        
+          <ngb-accordion #acc="ngbAccordion" id="accordion-id" (panelChange)="beforeChange($event)" >
+          
+            <ngb-panel *ngFor="let menuItem of menuItems;let i =  index" class="{{menuItem.class}} nav-item" >
+              <ng-template ngbPanelTitle class="nav-link " >
+                <i class="ni {{menuItem.icon}}"></i> 
+                 <span >{{menuItem.title}}</span>
+                 <span *ngIf="i!=0" class="dropdown-toggle accordion-icon-dropdown" data-bs-toggle="dropdown" aria-expanded="true"></span>
+                </ng-template>
+
+              <ng-template ngbPanelContent>
+                <ul class="navbar-nav">
+                  <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+                      <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+                          <i class="ni {{menuItem.icon}}"></i>
+                          {{menuItem.title}}
+                      </a>
+                  </li>
+              </ul>
+              </ng-template>
+            </ngb-panel>
+         
+        </ngb-accordion>
+  
+
+      <!-- Navigation  Original
       <ul class="navbar-nav">
           <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
               <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
@@ -95,12 +123,12 @@
                   {{menuItem.title}}
               </a>
           </li>
-      </ul>
+      </ul>-->
       <!-- Divider -->
       <hr class="my-3">
-      <!-- Heading -->
+      <!-- Heading 
       <h6 class="navbar-heading text-muted">Documentation</h6>
-      <!-- Navigation -->
+     
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
           <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard-angular/documentation/tutorial">
@@ -117,7 +145,7 @@
             <i class="ni ni-ui-04"></i> Components
           </a>
         </li>
-      </ul>
+      </ul>-->
     </div>
   </div>
 </nav>
