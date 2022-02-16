@@ -14,9 +14,11 @@ export class AuthService {
 
   sendCredentials(email: string, password: string): Observable<any> {
     const body = {
-      email,
-      password
+      controlador: "Usuario",
+      operacion: "validarUsuario",
+      usuarioNombre:email,
+      usuarioClave:password
     }
-    return this.http.post(`${this.URL}/auth/login`, body)
+    return this.http.post(this.URL, body)
   }
 }
