@@ -7,7 +7,7 @@
     </button>
     <!-- Brand -->
     <a class="navbar-brand pt-0" routerLinkActive="active" [routerLink]="['/dashboard']">
-      <img src="./assets/img/brand/red.png" class="navbar-brand-img" alt="...">
+      <img src="{{CLIENTE_LOGO_SIDEBAR}}" class="navbar-brand-img" alt="...">
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
@@ -51,9 +51,9 @@
             <span>Support</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
+          <a (click)="logout()" class="dropdown-item">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Cerrar Sesión</span>
           </a>
         </div>
       </li>
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <!-- Form 
+      <!-- Form
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
           <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
@@ -88,14 +88,14 @@
         </div>
       </form>
 -->
-      
-         
-        
+
+
+
           <ngb-accordion #acc="ngbAccordion" id="accordion-id" (panelChange)="beforeChange($event)" >
-          
+
             <ngb-panel *ngFor="let menuItem of menuItems;let i =  index" class="{{menuItem.class}} nav-item" >
               <ng-template ngbPanelTitle class="nav-link " >
-                <i class="ni {{menuItem.icon}}"></i> 
+                <i class="ni {{menuItem.icon}}"></i>
                  <span >{{menuItem.title}}</span>
                  <span *ngIf="i!=0" class="dropdown-toggle accordion-icon-dropdown" data-bs-toggle="dropdown" aria-expanded="true"></span>
                 </ng-template>
@@ -111,9 +111,9 @@
               </ul>
               </ng-template>
             </ngb-panel>
-         
+
         </ngb-accordion>
-  
+
 
       <!-- Navigation  Original
       <ul class="navbar-nav">
@@ -126,9 +126,9 @@
       </ul>-->
       <!-- Divider -->
       <hr class="my-3">
-      <!-- Heading 
+      <!-- Heading
       <h6 class="navbar-heading text-muted">Documentation</h6>
-     
+
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
           <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard-angular/documentation/tutorial">

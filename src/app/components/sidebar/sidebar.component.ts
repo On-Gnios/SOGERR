@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {NgbAccordionConfig} from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/pages/login/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 declare interface RouteInfo {
     path: string;
@@ -28,8 +30,9 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   public isCollapsed = true;
+  CLIENTE_LOGO_SIDEBAR = environment.CLIENTE_LOGO_SIDEBAR;
 
-  constructor(private router: Router, config: NgbAccordionConfig) { 
+  constructor(private router: Router, config: NgbAccordionConfig, private AuthService:AuthService) {
     config.closeOthers = true;
     config.animation = true;
 
@@ -42,10 +45,14 @@ export class SidebarComponent implements OnInit {
    });
   }
 
+  logout(){
+    this.AuthService.logout();
+  }
+
   public beforeChange($event) {
     console.log($event);
-    
-    
+
+
     if ($event.panelId === 'ngb-panel-0') {
       $event.preventDefault();
     }

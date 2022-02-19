@@ -5,9 +5,11 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { FrasesDeMotivacionService } from 'src/app/servicios/frases-de-motivacion.service';
+import { LocalStorageService } from 'src/app/servicios/local-storage.service';
 import { SweetalertService } from 'src/app/servicios/sweetalert.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../../services/auth.service';
+import {NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,10 +20,21 @@ export class LoginComponent implements OnInit {
   public frase;
   errorSession: boolean = false
   formLogin;
-  constructor(public SweetalertService: SweetalertService ,private fb: FormBuilder,public FrasesDeMotivacionService:FrasesDeMotivacionService,private authService: AuthService, private cookie: CookieService,
+  validation_messages = {
+    'email': [
+      { type: 'required', message: 'email es requerido.' },
+      { type: 'email', message: 'email es invalido.' }
+    ],
+    'password': [
+      { type: 'required', message: 'Contraseña es requerida.' }
+    ]
+  };
+
+  constructor(private spinner: NgxSpinnerService, public SweetalertService: SweetalertService ,private fb: FormBuilder,public FrasesDeMotivacionService:FrasesDeMotivacionService,private authService: AuthService, private LocalStorageService: LocalStorageService,
     private router: Router) { }
 
   ngOnInit(){
+
     this.frase = this.FrasesDeMotivacionService.getFrase();
     this.formLogin = this.fb.group (
       {
@@ -31,33 +44,37 @@ export class LoginComponent implements OnInit {
         ]),
         password: new FormControl('',
           [
-            Validators.required,
+            Validators.required/* ,
             Validators.minLength(6),
-            Validators.maxLength(12)
+            Validators.maxLength(12) */
           ])
       }
     )
   }
 
   sendLogin(): void {
+    /* this.spinner.show("login"); */
     const { email, password } = this.formLogin.value
     this.authService.sendCredentials(email, password)
       //TODO: 200 <400
       .subscribe(response => { //TODO: Cuando el usuario credenciales Correctas ✔✔
-
+        /* this.spinner.hide("login"); */
         if (response.RESPUESTA=="EXITO") {
+          this.LocalStorageService.postData('token', response.DATOS.TOKEN);
+          this.LocalStorageService.postDatoJson('usuario', response.DATOS.USUARIO);
           this.router.navigateByUrl("/");
           return;
         }
 
         this.SweetalertService.modal("info",response.MENSAJE);
-        /* const { tokenSession, data } = responseOk
-        this.cookie.set('token', tokenSession, 4, '/') //TODO:📌📌📌📌
-        this.router.navigateByUrl("/"); */
+
       },
         err => {//TODO error 400>=
+          this.spinner.hide();
           this.errorSession = true
-          console.log('⚠⚠⚠⚠Ocurrio error con tu email o password');
+          this.SweetalertService.modal("error",environment.MENSAJES.ERROR);
+          console.log(err);
+
         })
   }
 
