@@ -31,7 +31,8 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
   CLIENTE_LOGO_SIDEBAR = environment.CLIENTE_LOGO_SIDEBAR;
-
+  usuarioName;
+  usuarioAVATAR;
   constructor(private router: Router, config: NgbAccordionConfig, private AuthService:AuthService) {
     config.closeOthers = true;
     config.animation = true;
@@ -39,6 +40,13 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    let user = this.AuthService.usuarioLogiado();
+    this.usuarioName= user.personaRAZONSOCIAL;
+    this.usuarioAVATAR= user.usuarioAVATAR;
+
+    if (!this.usuarioAVATAR) {
+      this.usuarioAVATAR = "assets/img/theme/user.png";
+    }
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;

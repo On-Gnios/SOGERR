@@ -16,8 +16,10 @@ export const environment = {
     "CERRAR_SESION" : "😣 Seguro que desea cerrar sesión?",
     "MENSAJE_DE_BIENVENIDA" :"😎 Bienvenido.. 😉",
     "ACCESO_NO_PERMITIDO" :"😓 Acceso no permitido."
-  }
-
+  },
+  GOOGLE_CLIENTE_ID:"667730095943-qmi7cqm2bgh8dj8futbslb0bv89o3r1a.apps.googleusercontent.com",
+  FACEBOOK_CLIENTE_ID:"1105904470241606",
+  VALIDATE_PROVIDER_AUTH_DATA : false
 };
 
 /*

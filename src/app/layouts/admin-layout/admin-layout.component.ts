@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-admin-layout',
@@ -8,16 +7,10 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor() {}
 
   ngOnInit() {
-    /** spinner starts on init */
-    this.spinner.show("init");
 
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide("init");
-    }, 5000);
   }
 
 }

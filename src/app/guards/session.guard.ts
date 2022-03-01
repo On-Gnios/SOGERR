@@ -30,7 +30,7 @@ export class SessionGuard implements CanActivate {
 
       const token: boolean = !!this.AuthService.usuarioLogiadoToken();
       if (!token) {
-        this.SweetalertService.notificacion("error", environment.MENSAJES.ACCESO_NO_PERMITIDO);
+        //this.SweetalertService.notificacion("error", environment.MENSAJES.ACCESO_NO_PERMITIDO);
         this.Router.navigateByUrl("/login");
       }
       return token

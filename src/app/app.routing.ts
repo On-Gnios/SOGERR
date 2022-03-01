@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { SessionGuard } from './guards/session.guard';
 
 const routes: Routes =[
   {
@@ -19,7 +20,8 @@ const routes: Routes =[
         path: '',
         loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
       }
-    ]
+    ],
+    canActivate: [SessionGuard]
   }, {
     path: '',
     component: AuthLayoutComponent,

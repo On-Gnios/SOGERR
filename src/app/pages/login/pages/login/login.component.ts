@@ -10,6 +10,8 @@ import { SweetalertService } from 'src/app/servicios/sweetalert.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../../services/auth.service';
 import {NgxSpinnerService } from "ngx-spinner";
+import { AuthGoogleService } from '../../services/auth-google.service';
+import { AuthFacebookService } from '../../services/auth-facebook.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +20,6 @@ import {NgxSpinnerService } from "ngx-spinner";
 export class LoginComponent implements OnInit {
   public cliente = environment.EMPRESA_CLIENTE_NOMBRE;
   public frase;
-  errorSession: boolean = false
   formLogin;
   validation_messages = {
     'email': [
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(private spinner: NgxSpinnerService, public SweetalertService: SweetalertService ,private fb: FormBuilder,public FrasesDeMotivacionService:FrasesDeMotivacionService,private authService: AuthService, private LocalStorageService: LocalStorageService,
-    private router: Router) { }
+    private router: Router, private AuthGoogleService:AuthGoogleService,  private AuthFacebookService:AuthFacebookService) { }
 
   ngOnInit(){
 
@@ -50,32 +51,70 @@ export class LoginComponent implements OnInit {
           ])
       }
     )
+
   }
 
   sendLogin(): void {
-    /* this.spinner.show("login"); */
     const { email, password } = this.formLogin.value
-    this.authService.sendCredentials(email, password)
-      //TODO: 200 <400
-      .subscribe(response => { //TODO: Cuando el usuario credenciales Correctas ✔✔
-        /* this.spinner.hide("login"); */
-        if (response.RESPUESTA=="EXITO") {
-          this.LocalStorageService.postData('token', response.DATOS.TOKEN);
-          this.LocalStorageService.postDatoJson('usuario', response.DATOS.USUARIO);
-          this.router.navigateByUrl("/");
-          return;
-        }
+    this.sendCredentials("LOCAL", email, password);
+  }
 
-        this.SweetalertService.modal("info",response.MENSAJE);
+  loginWithGoogle(){
+    this.AuthGoogleService.loginWithGoogle().then(user=>{
+      if (user) {
+        console.log(user);
+        this.sendCredentials("GOOGLE", user.email, "", user);
+      }
+    }).catch(error=>{
+      this.SweetalertService.modal("error",environment.MENSAJES.ERROR);
+      console.log(error);
+    });
+  }
 
-      },
-        err => {//TODO error 400>=
-          this.spinner.hide();
-          this.errorSession = true
-          this.SweetalertService.modal("error",environment.MENSAJES.ERROR);
-          console.log(err);
+  loginWithFacebook(){
+    this.AuthFacebookService.loginWithFacebook().then(user=>{
+      if (user) {
+        console.log(user);
+        this.sendCredentials("FACEBOOK", user.email, "", user);
+      }
+    }).catch(error=>{
+      this.SweetalertService.modal("error",environment.MENSAJES.ERROR);
+      console.log(error);
+    });
+  }
 
-        })
+  sendCredentials(providerAuth, email, password, providerAuthData={} ){
+    this.authService.sendCredentials(providerAuth, providerAuthData, email, password).subscribe(response => {
+
+      if (response.RESPUESTA=="EXITO") {
+        this.prepararInicio(response.DATOS.TOKEN, response.DATOS.USUARIO);
+        return;
+      }
+
+      if (providerAuth!="LOCAL") {
+        this.authService.logOutInProvider();
+      };
+      this.SweetalertService.modal("info",response.MENSAJE);
+    },
+      err => {//TODO error 400>=
+        this.spinner.hide();
+        this.SweetalertService.modal("error",environment.MENSAJES.ERROR);
+        console.log(err);
+
+      })
+  }
+
+
+  prepararInicio(TOKEN,USUARIO){
+    this.LocalStorageService.postData('token', TOKEN);
+    this.LocalStorageService.postDatoJson('usuario', USUARIO);
+    this.router.navigateByUrl("/");
+     /** spinner starts on init */
+    this.spinner.show("init");
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide("init");
+    }, 5000);
   }
 
 }

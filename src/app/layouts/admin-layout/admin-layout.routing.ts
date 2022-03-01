@@ -8,16 +8,16 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { SessionGuard } from 'src/app/guards/session.guard';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent,
-    canActivate: [SessionGuard] },
-    { path: 'user-profile',   component: UserProfileComponent,
-    canActivate: [SessionGuard] },
-    { path: 'tables',         component: TablesComponent,
-    canActivate: [SessionGuard] },
-    { path: 'icons',          component: IconsComponent,
-    canActivate: [SessionGuard] },
-    { path: 'maps',           component: MapsComponent ,
-    canActivate: [SessionGuard]},
+    { path: 'dashboard',      component: DashboardComponent
+    },
+    { path: 'user-profile',   component: UserProfileComponent
+    },
+    { path: 'tables',         component: TablesComponent
+    },
+    { path: 'icons',          component: IconsComponent
+    },
+    { path: 'maps',           component: MapsComponent
+    },
     {
         path: 'recoleccion',
         children: [
@@ -25,7 +25,7 @@ export const AdminLayoutRoutes: Routes = [
             path: '',
             loadChildren: () => import('../../pages/proceso-recoleccion/proceso-recoleccion.module').then(m => m.ProcesoRecoleccionModule),
             }
-        ],
-        canActivate: [SessionGuard]
+        ]
+
     },
 ];

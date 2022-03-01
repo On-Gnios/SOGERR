@@ -13,7 +13,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { NgxSpinnerModule } from "ngx-spinner";
-
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  FacebookLoginProvider,
+} from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -24,14 +30,30 @@ import { NgxSpinnerModule } from "ngx-spinner";
     NgbModule,
     RouterModule,
     AppRoutingModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SocialLoginModule,
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent
   ],
-  providers: [],
+  providers: [{
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(environment.GOOGLE_CLIENTE_ID),
+        },
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider(environment.FACEBOOK_CLIENTE_ID)
+        }
+      ],
+    } as SocialAuthServiceConfig,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

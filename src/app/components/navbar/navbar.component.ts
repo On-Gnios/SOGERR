@@ -14,12 +14,20 @@ export class NavbarComponent implements OnInit {
   public listTitles: any[];
   public location: Location;
   usuarioName;
+  usuarioAVATAR;
   constructor(location: Location,  private element: ElementRef, private router: Router, public AuthService:AuthService) {
     this.location = location;
   }
 
   ngOnInit() {
-    this.usuarioName= this.AuthService.usuarioLogiado().personaRAZONSOCIAL;
+    let user = this.AuthService.usuarioLogiado();
+    this.usuarioName= user.personaRAZONSOCIAL;
+    this.usuarioAVATAR= user.usuarioAVATAR;
+
+    if (!this.usuarioAVATAR) {
+      this.usuarioAVATAR = "assets/img/theme/user.png";
+    }
+
     this.listTitles = ROUTES.filter(listTitle => listTitle);
   }
   getTitle(){
