@@ -6,12 +6,16 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableBasicComponent } from './table-basic/table-basic.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule
   ],
   declarations: [
     FooterComponent,

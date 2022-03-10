@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     let user = this.AuthService.usuarioLogiado();
+
+
     this.usuarioName= user.personaRAZONSOCIAL;
     this.usuarioAVATAR= user.usuarioAVATAR;
 
