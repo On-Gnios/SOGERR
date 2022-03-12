@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { TableBasicComponent } from 'src/app/components/table-basic/table-basic.component';
+import { TableBasicComponent } from 'src/app/components/table/table-basic/table-basic.component';
 
 @Component({
   selector: 'app-proceso-recoleccion-page',

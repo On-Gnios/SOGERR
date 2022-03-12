@@ -5,14 +5,11 @@
           <table class="table align-items-center table-flush" [ngClass]="temaTableDark ? 'table-dark' : ''">
             <thead [ngClass]="temaTableDark ? 'thead-dark' : 'thead-light'">
               <th>
+
                 <input id="allCheck" type="checkbox" class="checkbox"  (change)="selectAllItem($event)">
-                <div class="custom-control custom-checkbox mb-3">
-                  <input class="custom-control-input" id="customCheck1" type="checkbox">
-                  <label class="custom-control-label" for="customCheck1">Unchecked</label>
-                </div>
               </th>
               <th *ngFor="let columna of columnas" >
-                {{columna|titlecase}}
+                {{columna|Titlecase}}
               </th>
             </thead>
             <tbody [formGroup]="formCheckbox">

@@ -1,0 +1,35 @@
+<!-- Table -->
+
+<div class="table-responsive">
+  <ngx-spinner name="datatable" bdColor="rgba(28, 51, 93, 0.8)" size="default" color="#fff" type="pacman"
+    [fullScreen]="false"></ngx-spinner>
+  <table #dataTable class="table align-items-center table-flush display row-border hover"
+    [ngClass]="temaTableDark ? 'table-dark' : ''" style="width:100%;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th *ngFor="let columna of columnas">
+          {{columna|titlecase}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="fila" *ngFor="let item of data">
+        <td>
+          {{item[idKey]}}
+        </td>
+        <td *ngFor="let key of keys">
+          {{item[key]}}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>ID</th>
+        <th *ngFor="let columna of columnas">
+          {{columna|titlecase}}
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
